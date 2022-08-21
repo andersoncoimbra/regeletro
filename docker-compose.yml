@@ -1,0 +1,31 @@
+version: '3.7'
+name: 'RegEletro'
+services:
+  db:
+    container_name: 'banco'
+    image: mysql:5.7
+    restart: always    
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: 'regeletro'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_ROOT_PASSWORD: ""
+    volumes:
+      - ./db:/var/lib/mysql
+  api:
+    container_name: 'api'
+    image: docker.io/bitnami/laravel:9
+    ports:
+      - '8080:8000'
+    volumes:
+      - './api:/app'
+  frontend:
+    container_name: 'frontend'
+    image: 'httpd:2.4'
+    ports:
+      - '80:80'
+    volumes:
+      - ./frontend:/usr/local/apache2/htdocs/
+
+
